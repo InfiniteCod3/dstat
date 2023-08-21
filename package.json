@@ -1,6 +1,18 @@
 {
+  "scripts": {
+    "edgio:dev": "edgio dev",
+    "edgio:build": "edgio build",
+    "edgio:deploy": "edgio deploy"
+  },
   "dependencies": {
     "express": "^4.17.2",
     "socket.io": "^4.4.0"
+  },
+  "devDependencies": {
+    "@edgio/cli": "^7.2.1",
+    "@edgio/core": "^7.2.1",
+    "@edgio/devtools": "^7.2.1",
+    "@edgio/express": "^7.2.1",
+    "@edgio/prefetch": "^7.2.1"
   }
 }
