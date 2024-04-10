@@ -37,7 +37,16 @@
       function copyAddress(){var a=document.createElement('input');a.style='position: absolute; left: -1000px; top: -1000px';a.value=document.getElementById('attack-address').innerHTML;document.body.appendChild(a);a.select();document.execCommand('copy');document.body.removeChild(a);}
           
    </script>
-   <script src='/socket.io/socket.io.js' defer></script>
+   <!-- <script src='/socket.io/socket.io.js' defer></script> Removed for SSE implementation -->
    <script src='js/highcharts.js' defer></script>
-   <script src='js/requests.js' defer></script>
+   <script>
+      // Setup EventSource for SSE
+      var eventSource = new EventSource('/events');
+      eventSource.onmessage = function(event) {
+          var data = JSON.parse(event.data);
+          document.getElementById('max_requests').textContent = data.max_requests;
+          document.getElementById('total_day_requests').textContent = data.all_requests;
+      };
+   </script>
+   <!-- <script src='js/requests.js' defer></script> Replaced with SSE logic -->
 </html>
