@@ -1,7 +1,6 @@
 const express = require('express'),
 	app = express(),
 	http = require('http').createServer(app),
-	io = require('socket.io')(http),
 	path = require('path'),
 	fs = require('fs')
 var all_requests = 0,
@@ -25,7 +24,8 @@ setInterval(async() => {
 		}))
 	}
 
-	io.emit('requests', all_requests, per_requests, JSON.parse(config).max_requests)
+	// Previously: io.emit('requests', all_requests, per_requests, JSON.parse(config).max_requests)
+	// This will be replaced with SSE logic
 	per_requests = 0
 }, 1000)
 
