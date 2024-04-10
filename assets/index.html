@@ -26,7 +26,7 @@
             <div id='graph' style='border-radius: 15px'></div>
             </div>
          <div style='background: #06122f; width: 90%; weight: 90%; margin: 20px 20px 20px 20px; border-radius: 15px' id='stats'>
-            <h2 style="color: white">Statistics</h2> 
+            <h2 style="color: white">Statistics</h2>
             <p>The largest number of requests per second: <span id='max_requests'></span></p>
             <p>Number of requests per day: <span id='total_day_requests'></span></p>
        </div>
@@ -35,9 +35,19 @@
    <script language='JavaScript'>
       document.getElementById('attack-address').innerHTML = window.location.href + 'attack/'
       function copyAddress(){var a=document.createElement('input');a.style='position: absolute; left: -1000px; top: -1000px';a.value=document.getElementById('attack-address').innerHTML;document.body.appendChild(a);a.select();document.execCommand('copy');document.body.removeChild(a);}
-          
+
+      function initializeSSE() {
+        var source = new EventSource('/stats');
+        source.onmessage = function(event) {
+            var data = JSON.parse(event.data);
+            document.getElementById('max_requests').innerText = data.max_requests;
+            document.getElementById('total_day_requests').innerText = data.total_day_requests;
+        };
+      }
+      window.onload = function() {
+        initializeSSE();
+      };
    </script>
-   <script src='/socket.io/socket.io.js' defer></script>
    <script src='js/highcharts.js' defer></script>
    <script src='js/requests.js' defer></script>
 </html>
